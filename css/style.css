@@ -151,6 +151,134 @@ body {
   color: var(--color-error);
 }
 
+.button-secondary,
+.button-danger {
+  height: 48px;
+  font: inherit;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.button-secondary {
+  color: var(--color-text);
+}
+
+.button-danger {
+  color: var(--color-error);
+}
+
+.button-secondary:active,
+.button-danger:active {
+  opacity: 0.6;
+}
+
+/* ===== 一覧 ===== */
+.list-toolbar {
+  margin-bottom: 12px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.list-count {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+.word-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* 一覧が空のときは枠線も出さない */
+.word-list:empty {
+  display: none;
+}
+
+.word-list li + li {
+  border-top: 1px solid var(--color-border);
+}
+
+/* 1行：上段に英単語と次回日付、下段に意味 */
+.word-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 8px;
+  width: 100%;
+  padding: 12px 16px;
+  font: inherit;
+  color: var(--color-text);
+  text-align: left;
+  background: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.word-item:active {
+  background: var(--color-bg);
+}
+
+.word-item-word {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.word-item-status {
+  font-size: 12px;
+  color: var(--color-muted);
+  align-self: center;
+}
+
+.word-item-meaning {
+  grid-column: 1 / -1;
+  font-size: 14px;
+  color: var(--color-muted);
+  overflow-wrap: anywhere;
+}
+
+/* ===== ダイアログ ===== */
+.dialog {
+  width: calc(100% - 32px);
+  max-width: 500px;
+  padding: 16px;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: none;
+  border-radius: 12px;
+}
+
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.dialog-title {
+  margin: 0;
+  font-size: 18px;
+  text-align: center;
+}
+
+.dialog-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
 /* ===== 下部タブバー ===== */
 .tab-bar {
   position: fixed;

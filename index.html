@@ -39,13 +39,45 @@
     </section>
 
     <section id="view-list" class="view" data-title="単語一覧" hidden>
-      <p class="placeholder">一覧画面（ステップ3で実装）</p>
+      <div class="list-toolbar">
+        <input id="list-search" class="search-input" type="search" placeholder="単語・意味で検索"
+               autocapitalize="none" autocorrect="off" spellcheck="false">
+        <p id="list-count" class="list-count"></p>
+      </div>
+      <ul id="word-list" class="word-list"></ul>
+      <p id="list-empty" class="placeholder" hidden></p>
     </section>
 
     <section id="view-data" class="view" data-title="データ" hidden>
       <p class="placeholder">CSV取り込み・バックアップ（ステップ6・7で実装）</p>
     </section>
   </main>
+
+  <!-- 単語の編集ダイアログ（一覧画面から開く） -->
+  <dialog id="edit-dialog" class="dialog">
+    <form id="edit-form" class="form" autocomplete="off">
+      <h2 class="dialog-title">単語の編集</h2>
+      <label class="field">
+        <span class="field-label">英単語 <span class="required">必須</span></span>
+        <input name="word" type="text" lang="en" required
+               autocapitalize="none" autocorrect="off" spellcheck="false">
+      </label>
+      <label class="field">
+        <span class="field-label">意味 <span class="required">必須</span></span>
+        <input name="meaning" type="text" required>
+      </label>
+      <label class="field">
+        <span class="field-label">例文</span>
+        <textarea name="example" rows="3" lang="en" autocapitalize="sentences"></textarea>
+      </label>
+      <p id="edit-message" class="form-message is-error" role="status"></p>
+      <div class="dialog-buttons">
+        <button type="button" id="edit-cancel" class="button-secondary">キャンセル</button>
+        <button type="submit" class="button-primary">保存</button>
+      </div>
+      <button type="button" id="edit-delete" class="button-danger">この単語を削除</button>
+    </form>
+  </dialog>
 
   <!-- 画面下のタブ。href のハッシュで画面を切り替える -->
   <nav class="tab-bar" aria-label="画面切替">

@@ -71,9 +71,15 @@ function normalizeWord(word) {
 }
 
 // 同じ単語がすでに登録されているか（大文字・小文字は区別しない）
-export function hasWord(word) {
+// 編集時は自分自身と比べないよう、excludeId のカードを除いて調べる
+export function hasWord(word, excludeId = null) {
   const target = normalizeWord(word);
-  return getCards().some((card) => normalizeWord(card.word) === target);
+  return getCards().some((card) => card.id !== excludeId && normalizeWord(card.word) === target);
+}
+
+// IDからカードを探す（見つからなければ undefined）
+export function findCard(id) {
+  return getCards().find((card) => card.id === id);
 }
 
 // カードIDを作る
@@ -117,4 +123,48 @@ export function addCard({ word, meaning, example }) {
     throw error;
   }
   return card;
+}
+
+// カードの単語・意味・例文を書き換えて保存する
+// 覚え具合（ease / interval / due など）は変えない
+export function updateCard(id, { word, meaning, example }) {
+  const card = findCard(id);
+  if (!card) throw new Error('カードが見つかりません');
+
+  const before = { ...card };
+  Object.assign(card, {
+    word: word.trim(),
+    meaning: meaning.trim(),
+    example: example.trim(),
+    updatedAt: Date.now(),
+  });
+  try {
+    saveData();
+  } catch (error) {
+    // 保存できなかったら元に戻す
+    Object.assign(card, before);
+    throw error;
+  }
+  return card;
+}
+
+// カードを削除して保存する
+// today.relearnIds（今日の出し直し待ち）からも外す。
+// today.newIds（今日出した新規カード）は上限の計算に使うので、あえて減らさない
+export function deleteCard(id) {
+  const current = loadData();
+  const index = current.cards.findIndex((card) => card.id === id);
+  if (index === -1) return;
+
+  const [removed] = current.cards.splice(index, 1);
+  const relearnBefore = current.today.relearnIds;
+  current.today.relearnIds = relearnBefore.filter((relearnId) => relearnId !== id);
+  try {
+    saveData();
+  } catch (error) {
+    // 保存できなかったら元に戻す
+    current.cards.splice(index, 0, removed);
+    current.today.relearnIds = relearnBefore;
+    throw error;
+  }
 }

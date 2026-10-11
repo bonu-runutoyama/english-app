@@ -1,10 +1,16 @@
 // アプリの起動と、画面（タブ）の切り替えを担当する
 
 import { initAddView } from './add.js';
+import { initListView, refreshListView } from './list.js';
 
 // 画面の名前一覧。index.html の id="view-○○" と対応している
 const VIEWS = ['review', 'add', 'list', 'data'];
 const DEFAULT_VIEW = 'review';
+
+// 画面を表示するたびに呼ぶ処理（最新のデータで表示し直す）
+const ON_SHOW = {
+  list: refreshListView,
+};
 
 // URLのハッシュ（#review など）から表示する画面名を決める
 function getViewFromHash() {
@@ -32,6 +38,8 @@ function showView(name) {
     }
   }
 
+  ON_SHOW[name]?.();
+
   // 画面を切り替えたら先頭までスクロールを戻す
   window.scrollTo(0, 0);
 }
@@ -41,4 +49,5 @@ window.addEventListener('hashchange', () => showView(getViewFromHash()));
 
 // 起動時の処理
 initAddView();
+initListView();
 showView(getViewFromHash());
