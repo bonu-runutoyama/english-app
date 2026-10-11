@@ -1,0 +1,113 @@
+/* ===== 色やサイズの共通設定 ===== */
+:root {
+  --color-bg: #f5f6f8;
+  --color-surface: #ffffff;
+  --color-text: #1d1f23;
+  --color-muted: #6b7280;
+  --color-primary: #2f6fde;
+  --color-border: #e2e5ea;
+  --header-height: 52px;
+  --tab-height: 56px;
+}
+
+/* 端末がダークモードのときの色 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #121418;
+    --color-surface: #1d2026;
+    --color-text: #eceef2;
+    --color-muted: #9aa1ad;
+    --color-primary: #6b9bff;
+    --color-border: #2c3038;
+  }
+}
+
+/* ===== 基本 ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* hidden 属性を必ず効かせる（display 指定に負けないように） */
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-bg);
+  /* ダブルタップでの拡大を防ぐ */
+  touch-action: manipulation;
+}
+
+/* ===== ヘッダー ===== */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  /* iPhoneのノッチ部分を避ける */
+  padding-top: env(safe-area-inset-top);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-header h1 {
+  margin: 0;
+  height: var(--header-height);
+  line-height: var(--header-height);
+  font-size: 18px;
+  text-align: center;
+}
+
+/* ===== メイン領域 ===== */
+.app-main {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+  /* 下のタブバーに隠れないよう余白を取る */
+  padding-bottom: calc(var(--tab-height) + env(safe-area-inset-bottom) + 16px);
+}
+
+.placeholder {
+  color: var(--color-muted);
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* ===== 下部タブバー ===== */
+.tab-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.tab {
+  flex: 1;
+  height: var(--tab-height);
+  line-height: var(--tab-height);
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-muted);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tab.is-active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
