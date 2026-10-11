@@ -19,7 +19,23 @@
     </section>
 
     <section id="view-add" class="view" data-title="単語の追加" hidden>
-      <p class="placeholder">追加画面（ステップ2で実装）</p>
+      <form id="add-form" class="form" autocomplete="off">
+        <label class="field">
+          <span class="field-label">英単語 <span class="required">必須</span></span>
+          <input name="word" type="text" lang="en" required
+                 autocapitalize="none" autocorrect="off" spellcheck="false">
+        </label>
+        <label class="field">
+          <span class="field-label">意味 <span class="required">必須</span></span>
+          <input name="meaning" type="text" required>
+        </label>
+        <label class="field">
+          <span class="field-label">例文</span>
+          <textarea name="example" rows="3" lang="en" autocapitalize="sentences"></textarea>
+        </label>
+        <button type="submit" class="button-primary">追加する</button>
+        <p id="add-message" class="form-message" role="status"></p>
+      </form>
     </section>
 
     <section id="view-list" class="view" data-title="単語一覧" hidden>

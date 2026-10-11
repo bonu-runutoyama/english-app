@@ -1,5 +1,7 @@
 // アプリの起動と、画面（タブ）の切り替えを担当する
 
+import { initAddView } from './add.js';
+
 // 画面の名前一覧。index.html の id="view-○○" と対応している
 const VIEWS = ['review', 'add', 'list', 'data'];
 const DEFAULT_VIEW = 'review';
@@ -37,5 +39,6 @@ function showView(name) {
 // タブ（リンク）を押すとハッシュが変わるので、それに合わせて画面を切り替える
 window.addEventListener('hashchange', () => showView(getViewFromHash()));
 
-// 起動時の表示
+// 起動時の処理
+initAddView();
 showView(getViewFromHash());
